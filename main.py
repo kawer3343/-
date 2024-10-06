@@ -2,21 +2,19 @@ from PIL import Image
 import os
 
 
-image = Image.open("photo_0.jpg")
-
-print("штука картинки ну да я не знаю:", image.mode)
-print(image.height, image.width)
-print(image.format)
-print(image.size)
-
-inst = image.resize((1080,1080))
-print(inst.size)
-inst.save("photo_inst.png", format="PNG")
-
-vk = image.resize((1400,1000))
-print(vk.size)
-vk.save("photo_vk.png", format="PNG")
-
-fb = image.resize((1200,628))
-print(fb.size)
-fb.save("photo_fb.png", format="PNG")
+for number in range(5):
+    image = Image.open(f"photo_{number}.jpg")
+    file_path = f"photo_end_{number}"
+    if not os.path.isdir(file_path):
+        os.mkdir(file_path)
+        
+    inst_image = image.resize((1080, 1080))
+    coordinates = (10, 0, inst_image.width-10, inst_image.height)
+    inst_image = inst_image.crop(coordinates)
+    inst_image.save(f"{file_path}/photo_inst.png", "PNG")
+    
+    vk_image = image.resize((1400, 1000))
+    vk_image.save(f"{file_path}/photo_vk.png", "PNG")
+    
+    fb_image = image.resize((1200, 628))
+    fb_image.save(f"{file_path}/photo_fb.png", "PNG")
